@@ -1,0 +1,24 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { getContent } from '../i18n';
+const { faq } = getContent(Astro.url);
+---
+<section id="faq" class="section" aria-labelledby="faq-titre">
+  <div class="container-page grid gap-10 md:grid-cols-[1fr_1.6fr] md:gap-16">
+    <SectionHeading id="faq-titre" eyebrow={faq.eyebrow} title={faq.title} />
+    <div class="rule">
+      {faq.items.map((item, i) => (
+        <details style={`--i:${i}`} class="reveal faq group border-b border-line">
+          <summary class="transition-colors hover:text-accent flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-medium [&::-webkit-details-marker]:hidden">
+            <span>{item.q}</span>
+            <Icon name="plus" size={20} class="shrink-0 text-accent transition-transform duration-200 group-open:rotate-45 motion-reduce:transition-none" />
+          </summary>
+          <div class="grid max-w-[60ch] gap-3 pb-6 text-muted">
+            {item.a.map((line) => <p>{line}</p>)}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

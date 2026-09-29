@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+import { getContent } from '../i18n';
+const { email } = getContent(Astro.url);
+---
+<section class="section" aria-labelledby="email-titre">
+  <div class="container-page grid gap-8 md:grid-cols-[1fr_1.4fr] md:gap-16">
+    <div class="reveal">
+      <p class="eyebrow flex items-center gap-3"><span class="h-px w-8 bg-accent" aria-hidden="true"></span>{email.eyebrow}</p>
+      <h2 id="email-titre" class="mt-4 font-display text-[clamp(1.9rem,1.4rem+1.8vw,2.75rem)] leading-[1.08]">{email.title}</h2>
+      <p class="mt-5 flex items-start gap-3 text-muted">
+        <Icon name="mail" size={20} class="mt-1 shrink-0 text-accent" />
+        <span>{email.example}</span>
+      </p>
+    </div>
+    <ul class="grid gap-3 self-center">
+      {email.points.map((pt, i) => (
+        <li style={`--i:${i}`} class="reveal flex gap-3 border-b border-line pb-3 last:border-b-0">
+          <Icon name="check" size={18} class="mt-1 shrink-0 text-accent" />
+          <span class="tabular">{pt}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

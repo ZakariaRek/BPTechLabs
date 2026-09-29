@@ -1,0 +1,24 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { getContent } from '../i18n';
+const { problem } = getContent(Astro.url);
+---
+<section class="section" aria-labelledby="probleme-titre">
+  <div class="container-page">
+    <SectionHeading id="probleme-titre" eyebrow={problem.eyebrow} title={problem.title} />
+    <ul class="mt-12 grid gap-10 md:mt-16 md:grid-cols-3 md:gap-12">
+      {problem.points.map((p, i) => (
+        <li class="rule pt-6" style={`--i:${i}`}>
+          <div class="reveal" style={`--i:${i}`}>
+            <div class="flex items-center justify-between text-accent">
+              <Icon name={p.icon} size={28} />
+              <span class="tabular text-sm text-muted">0{i + 1}</span>
+            </div>
+            <p class="mt-6 text-lg leading-snug md:text-xl">{p.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

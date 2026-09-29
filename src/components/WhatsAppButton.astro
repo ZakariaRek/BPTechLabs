@@ -1,0 +1,32 @@
+---
+// The one call to action of the page. Every CTA uses this component.
+import Icon from './Icon.astro';
+import { getContent } from '../i18n';
+
+interface Props {
+  /** Where the button sits, sent along with data-track for analytics. */
+  placement: string;
+  size?: 'md' | 'lg';
+  class?: string;
+}
+
+const { placement, size = 'md', class: className = '' } = Astro.props;
+const { contact, ui } = getContent(Astro.url);
+---
+<a
+  href={contact.whatsappUrl}
+  target="_blank"
+  rel="noopener"
+  data-track="whatsapp"
+  data-placement={placement}
+  class:list={[
+    'btn-wa inline-flex items-center justify-center gap-2.5 rounded-full bg-accent font-semibold text-white whitespace-nowrap',
+    'hover:bg-accent-strong active:bg-accent-strong',
+    size === 'lg' ? 'min-h-14 px-7 text-[1.0625rem]' : 'min-h-11 px-5 text-[0.9375rem]',
+    className,
+  ]}
+>
+  <Icon name="message" size={size === 'lg' ? 20 : 18} />
+  <span>{contact.whatsappLabel}</span>
+  <span class="sr-only">{ui.newTab}</span>
+</a>

@@ -1,0 +1,87 @@
+---
+import BrowserFrame from './BrowserFrame.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import { getContent } from '../i18n';
+const { hero } = getContent(Astro.url);
+const m = hero.mockup;
+// Split the title into words for the word-by-word reveal (non-breaking spaces stay together).
+const words = hero.title.split(' ');
+// Delay helper for staggered load animations.
+const d = (ms: number) => `--d:${ms}ms`;
+---
+<section id="top" class="relative isolate overflow-clip pb-16 pt-8 md:pb-24 md:pt-20">
+  <!-- Blueprint grid, decorative. -->
+  <div class="hero-grid pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
+
+  <div class="container-page grid items-center gap-10 md:gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
+    <!-- Text. On mobile the mockup sits above it (order). -->
+    <div class="order-2 lg:order-1">
+      <h1 class="font-display text-[length:var(--text-display)] leading-[1.02] tracking-[-0.015em]">
+        {words.map((w, i) => (
+          <Fragment><span class="word"><span style={`--i:${i}`}>{w}</span></span>{i < words.length - 1 && ' '}</Fragment>
+        ))}
+      </h1>
+      <p class="load-rise mt-6 max-w-[34ch] text-lg leading-relaxed text-muted md:text-xl" style={d(293)}>
+        {hero.subtitle}
+      </p>
+      <div class="load-rise mt-8" style={d(390)}>
+        <WhatsAppButton placement="hero" size="lg" />
+      </div>
+      <p class="load-rise tabular mt-4 text-[0.9375rem] text-muted" style={d(455)}>{hero.note}</p>
+    </div>
+
+    <!-- Sample architect site, drawn in HTML/CSS (no image). It "builds" itself on load. -->
+    <div class="order-1 mx-auto w-full max-w-2xl lg:order-2 lg:max-w-none" role="img" aria-label={m.label}>
+      <div class="load-rise" style={d(65)}>
+          <BrowserFrame url={m.url}>
+            <div class="bg-card p-4 sm:p-6" aria-hidden="true">
+              <div class="flex items-center justify-between">
+                <span class="load-rise font-display text-lg leading-none sm:text-xl" style={d(228)}>{m.name}</span>
+                <span class="flex gap-3 text-[0.625rem] uppercase tracking-[0.14em] text-muted sm:gap-4 sm:text-[0.6875rem]">
+                  {m.links.map((l, i) => <span class="load-rise" style={d(260 + i * 46)}>{l}</span>)}
+                </span>
+              </div>
+
+              <!-- Hero image: an abstract facade in CSS. -->
+              <div class="facade relative mt-4 aspect-[16/7] overflow-hidden rounded-sm sm:mt-5">
+                <div class="load-grow-y absolute bottom-[14%] left-[8%] h-[62%] w-[34%] bg-[#d8d4c8]" style={d(358)}></div>
+                <div class="load-grow-y absolute bottom-[14%] left-[42%] h-[44%] w-[26%] bg-[#bfbaab]" style={d(455)}></div>
+                <div class="load-grow-y absolute bottom-[14%] left-[68%] h-[74%] w-[22%] bg-[#e6e3da]" style={d(553)}></div>
+                <div class="load-rise absolute bottom-[14%] left-[12%] h-[14%] w-[8%] bg-[#1d5750]/85" style={d(813)}></div>
+                <div class="load-rise absolute bottom-[40%] left-[72%] h-[10%] w-[14%] bg-[#1f211e]/70" style={d(878)}></div>
+                <div class="load-rise absolute bottom-[20%] left-[72%] h-[10%] w-[14%] bg-[#1f211e]/70" style={d(943)}></div>
+                <div class="load-grow-x absolute inset-x-0 bottom-0 h-[14%] bg-[#a9a495]" style={d(260)}></div>
+                <span class="load-rise absolute left-[5%] top-[12%] font-display text-[clamp(0.9rem,2.4vw,1.4rem)] text-ink/80" style={d(715)}>
+                  {m.heading}
+                </span>
+                <!-- Slow light sweep across the facade. -->
+                <div class="sweep pointer-events-none absolute inset-0 bg-[linear-gradient(100deg,transparent_35%,rgb(255_255_255/0.45)_50%,transparent_65%)]"></div>
+              </div>
+
+              <div class="mt-3 grid grid-cols-3 gap-2 sm:mt-4 sm:gap-3">
+                {m.projects.map((p, i) => (
+                  <div class="load-rise" style={d(650 + i * 78)}>
+                    <div class:list={['aspect-[4/3] rounded-sm', ['bg-[#dcd9cf]', 'bg-[#c9d6d1]', 'bg-[#e4dccc]'][i]]}>
+                      <div class:list={[
+                        'size-full',
+                        i === 0 && 'bg-[linear-gradient(180deg,transparent_55%,#b8b3a4_55%)]',
+                        i === 1 && 'bg-[linear-gradient(90deg,transparent_30%,#9fb5ad_30%,#9fb5ad_60%,transparent_60%)]',
+                        i === 2 && 'bg-[radial-gradient(circle_at_50%_110%,#c4b597_38%,transparent_39%)]',
+                      ]}></div>
+                    </div>
+                    <p class="mt-1.5 truncate text-[0.625rem] text-muted sm:text-[0.6875rem]">{p}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </BrowserFrame>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .facade {
+    background: linear-gradient(180deg, #eef0ec 0%, #e3e6e1 100%);
+  }
+</style>

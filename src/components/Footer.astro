@@ -1,0 +1,11 @@
+---
+import { getContent } from '../i18n';
+const { contact, footer, meta } = getContent(Astro.url);
+---
+<footer class="border-t border-line pb-[calc(6rem+env(safe-area-inset-bottom))] pt-8 md:pb-10">
+  <div class="container-page flex flex-col items-center justify-between gap-3 text-[0.9375rem] text-muted sm:flex-row">
+    <span class="font-display text-xl text-ink">{meta.brand}</span>
+    <span>{contact.domain}</span>
+    <span class="tabular">{footer.copyright}</span>
+  </div>
+</footer>

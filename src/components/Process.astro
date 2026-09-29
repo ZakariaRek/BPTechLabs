@@ -1,0 +1,40 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { getContent } from '../i18n';
+const { process, ui } = getContent(Astro.url);
+---
+<section id="processus" class="section" aria-labelledby="processus-titre">
+  <div class="container-page">
+    <SectionHeading id="processus-titre" eyebrow={process.eyebrow} title={process.title} />
+
+    <ol class="mt-12 grid gap-8 sm:grid-cols-2 md:mt-16 lg:grid-cols-4 lg:gap-6">
+      {process.steps.map((s, i) => (
+        <li class="rule pt-5" style={`--i:${i}`}>
+          <div class="reveal" style={`--i:${i}`}>
+            <span class="tabular font-display text-5xl leading-none text-accent">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-5 text-lg font-semibold">{s.name}</h3>
+            <p class="mt-2 text-muted">{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="mt-16 md:mt-20">
+      <h3 class="reveal text-[0.8125rem] font-semibold uppercase tracking-[0.14em]">{process.paymentTitle}</h3>
+      <ol class="mt-5 flex flex-col gap-2 sm:flex-row sm:gap-1.5">
+        {process.payments.map((p, i) => (
+          <li
+            class:list={[
+              'reveal-wipe flex items-baseline gap-3 rounded-lg px-5 py-4 sm:block',
+              i === 0 ? 'bg-accent-strong text-white' : i === 1 ? 'bg-accent text-white' : 'bg-accent-soft text-ink',
+            ]}
+            style={`flex: ${p.share} 1 0%; --i:${i}`}
+          >
+            <span class="tabular font-display text-3xl leading-none sm:text-4xl">{ui.percent(p.share)}</span>
+            <span class="text-[0.9375rem] sm:mt-2 sm:block">{p.label}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,16 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  id?: string;
+  class?: string;
+}
+const { eyebrow, title, id, class: className = '' } = Astro.props;
+---
+<div class:list={['reveal max-w-3xl', className]}>
+  <p class="eyebrow flex items-center gap-3">
+    <span class="h-px w-8 bg-accent" aria-hidden="true"></span>
+    {eyebrow}
+  </p>
+  <h2 id={id} class="h-section mt-4">{title}</h2>
+</div>

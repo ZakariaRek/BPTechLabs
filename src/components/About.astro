@@ -1,0 +1,31 @@
+---
+import { Picture } from 'astro:assets';
+import SectionHeading from './SectionHeading.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import { getContent } from '../i18n';
+// TODO(owner): remplacer par votre photo (même nom de fichier, portrait 4:5).
+import photo from '../assets/about-placeholder.png';
+const { about } = getContent(Astro.url);
+---
+<section class="section" aria-labelledby="apropos-titre">
+  <div class="container-page grid items-center gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
+    <Picture
+      src={photo}
+      formats={['avif', 'webp']}
+      widths={[360, 640, 900]}
+      sizes="(min-width: 768px) 38vw, 100vw"
+      alt={about.photoAlt}
+      class="reveal aspect-[4/5] w-2/3 max-w-sm rounded-2xl object-cover md:w-full"
+      loading="lazy"
+      decoding="async"
+    />
+    <div>
+      <SectionHeading id="apropos-titre" eyebrow={about.eyebrow} title={about.title} />
+      <!-- TODO(owner): texte de présentation à écrire (content.fr.ts > about.lines). -->
+      <div class="mt-6 grid max-w-[52ch] gap-3 text-lg text-muted">
+        {about.lines.map((l) => <p>{l}</p>)}
+      </div>
+      <div class="reveal mt-8"><WhatsAppButton placement="apropos" /></div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,37 @@
+---
+// The whole page. Rendered at / (French, default) and /en/ (English);
+// each section picks its language from the URL (see src/i18n.ts).
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import Problem from './Problem.astro';
+import Examples from './Examples.astro';
+import Reviews from './Reviews.astro';
+import Offers from './Offers.astro';
+import Process from './Process.astro';
+import Maintenance from './Maintenance.astro';
+import Email from './Email.astro';
+import Faq from './Faq.astro';
+import About from './About.astro';
+import Closing from './Closing.astro';
+import Footer from './Footer.astro';
+import FloatingWhatsApp from './FloatingWhatsApp.astro';
+---
+<Base>
+  <Header />
+  <main id="contenu">
+    <Hero />
+    <Problem />
+    <Examples />
+    <Reviews />
+    <Offers />
+    <Process />
+    <Maintenance />
+    <Email />
+    <Faq />
+    <About />
+    <Closing />
+  </main>
+  <Footer />
+  <FloatingWhatsApp />
+</Base>

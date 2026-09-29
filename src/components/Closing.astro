@@ -1,0 +1,18 @@
+---
+import WhatsAppButton from './WhatsAppButton.astro';
+import { getContent } from '../i18n';
+const { closing, contact } = getContent(Astro.url);
+---
+<section class="section" aria-labelledby="contact-titre">
+  <div class="reveal container-page text-center">
+    <h2 id="contact-titre" class="font-display text-[length:var(--text-display)] leading-[1.02] tracking-[-0.015em]">
+      {closing.title}
+    </h2>
+    <p class="mx-auto mt-5 max-w-md text-lg text-muted">{closing.text}</p>
+    <div class="mt-9"><WhatsAppButton placement="final" size="lg" /></div>
+    <p class="mt-8 text-muted">
+      {closing.phoneLabel}
+      <span class="tabular mt-1 block select-all text-xl font-medium text-ink">{contact.phoneDisplay}</span>
+    </p>
+  </div>
+</section>

@@ -1,0 +1,95 @@
+---
+import Icon from './Icon.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import { getContent } from '../i18n';
+const { meta, nav, ui } = getContent(Astro.url);
+const sw = ui.switchTo;
+---
+<a
+  href="#contenu"
+  class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+>
+  {nav.skipLink}
+</a>
+
+<header class="header-scroll sticky top-0 z-50 border-b border-line bg-paper/95">
+  <div class="container-page flex h-16 items-center justify-between gap-4 md:h-[4.5rem] md:gap-6">
+    <!-- TODO(owner): remplacer le logo texte par le vrai logo (SVG). -->
+    <a href="#top" class="font-display text-[1.6rem] leading-none tracking-tight">
+      {meta.brand}
+    </a>
+
+    <nav aria-label={ui.mainNav} class="hidden md:block">
+      <ul class="flex items-center gap-8 text-[0.9375rem]">
+        {nav.links.map((l) => (
+          <li><a href={l.href} class="nav-link py-1 text-muted hover:text-ink">{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2 md:gap-4">
+      <!-- Language switch: plain link to the other language's page. -->
+      <a
+        href={sw.href}
+        hreflang={sw.lang}
+        lang={sw.lang}
+        aria-label={sw.label}
+        class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-2 text-[0.8125rem] font-semibold tracking-[0.08em] text-muted transition-colors hover:text-ink"
+      >
+        {sw.short}
+      </a>
+
+      <div class="hidden md:block">
+        <WhatsAppButton placement="header" />
+      </div>
+
+      <!-- Mobile menu: native <details>, a few lines of JS only to close it. -->
+      <details class="group md:hidden" data-mobile-menu>
+        <summary
+          class="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-full border border-line px-4 text-[0.9375rem] font-medium [&::-webkit-details-marker]:hidden"
+        >
+          <Icon name="menu" size={18} class="group-open:hidden" />
+          <Icon name="close" size={18} class="hidden group-open:block" />
+          {nav.menuLabel}
+        </summary>
+        <nav
+          aria-label={ui.mobileNav}
+          class="absolute inset-x-0 top-full border-b border-line bg-paper px-5 pb-6 pt-2 shadow-[0_12px_24px_-16px_rgb(0_0_0/0.25)]"
+        >
+          <ul class="divide-y divide-line">
+            {nav.links.map((l, i) => (
+              <li class="menu-item" style={`--i:${i}`}><a href={l.href} class="block py-4 font-display text-3xl">{l.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    details[open] .menu-item {
+      animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      animation-delay: calc(var(--i) * 50ms);
+    }
+  }
+</style>
+
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>('[data-mobile-menu]');
+  if (menu) {
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('nav a')) menu.open = false;
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.open) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
+    });
+  }
+</script>

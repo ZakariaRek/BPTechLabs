@@ -1,0 +1,115 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import { getContent } from '../i18n';
+
+// Plans are listed Portfolio first (mobile order). On desktop: Vitrine, Portfolio, Cabinet.
+const desktopOrder: Record<string, string> = {
+  vitrine: 'lg:order-1',
+  portfolio: 'lg:order-2',
+  cabinet: 'lg:order-3',
+};
+const desktopIndex: Record<string, number> = { vitrine: 0, portfolio: 1, cabinet: 2 };
+const NBSP = String.fromCharCode(160);
+const { offers, ui } = getContent(Astro.url);
+const { compare } = offers;
+---
+<section id="offres" class="section" aria-labelledby="offres-titre">
+  <div class="container-page">
+    <SectionHeading id="offres-titre" eyebrow={offers.eyebrow} title={offers.title} />
+
+    <ul class="mx-auto mt-12 grid max-w-xl gap-6 md:mt-20 lg:max-w-none lg:grid-cols-3 lg:items-start lg:gap-8">
+      {offers.plans.map((plan) => (
+        <li
+          class:list={['reveal h-full', desktopOrder[plan.id], plan.recommended && 'lg:-mt-6 lg:mb-6']}
+          style={`--i:${desktopIndex[plan.id]}`}
+          aria-labelledby={`offre-${plan.id}`}
+        >
+          <div
+            class:list={[
+              'lift relative flex h-full flex-col rounded-2xl border bg-card p-6 sm:p-8',
+              plan.recommended
+                ? 'border-accent shadow-[0_24px_50px_-28px_rgb(29_87_80/0.5)]'
+                : 'border-line hover:border-[#bdbab0]',
+            ]}
+          >
+            <div class="flex min-h-7 items-center justify-between gap-3">
+              <h3 id={`offre-${plan.id}`} class="text-[0.8125rem] font-semibold uppercase tracking-[0.14em]">
+                {plan.name}
+              </h3>
+              {plan.recommended && (
+                <span class="rounded-full bg-accent px-3 py-1 text-[0.75rem] font-semibold text-white">
+                  {offers.recommendedLabel}
+                </span>
+              )}
+            </div>
+
+            <p class="mt-6 flex flex-wrap items-baseline gap-x-2">
+              <span class="tabular font-display text-[3.25rem] leading-none tracking-tight">
+                {plan.price.replace(' ', NBSP)}
+              </span>
+              <span class="text-[0.9375rem] font-medium text-muted">{offers.priceUnit}</span>
+            </p>
+
+            <p class="mt-5 border-b border-line pb-6 font-display text-xl leading-snug">{ui.quote(plan.quote)}</p>
+
+            <ul class="mt-6 grid gap-3 text-[1rem]">
+              {plan.features.map((f) => (
+                <li class="flex gap-3">
+                  <Icon name="check" size={18} class="mt-1 shrink-0 text-accent" />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+
+            <p class="mt-auto pt-8 text-[0.9375rem] text-muted">
+              {offers.deliveryLabel} <span class="font-medium text-ink">{plan.delivery}</span>
+            </p>
+            <WhatsAppButton placement={`offre-${plan.id}`} class="mt-5 w-full" />
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Comparison table: scrolls inside its own box on small screens. -->
+    <div class="reveal mt-16 md:mt-24">
+      <h3 id="comparatif" class="font-display text-3xl">{compare.caption}</h3>
+      <div
+        class="relative mt-6 overflow-x-auto rounded-2xl border border-line bg-card"
+        role="region"
+        aria-labelledby="comparatif"
+        tabindex="0"
+      >
+        <table class="w-full min-w-[38rem] border-collapse text-left text-[0.9375rem]">
+          <thead>
+            <tr class="border-b border-line">
+              <th scope="col" class="px-5 py-4 font-medium text-muted"><span class="sr-only">{ui.compareRowHeader}</span></th>
+              {compare.columns.map((c) => (
+                <th scope="col" class:list={['px-5 py-4 font-semibold', c === 'Portfolio' && 'bg-accent-soft']}>{c}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {compare.rows.map((row) => (
+              <tr class="border-b border-line transition-colors last:border-b-0 hover:bg-paper-2/60">
+                <th scope="row" class="px-5 py-3.5 font-normal">{row.label}</th>
+                {row.values.map((v, i) => (
+                  <td class:list={['tabular px-5 py-3.5', compare.columns[i] === 'Portfolio' && 'bg-accent-soft/60']}>
+                    {v === true ? (
+                      <span class="inline-flex text-accent"><Icon name="check" size={18} /><span class="sr-only">{compare.included}</span></span>
+                    ) : v === false ? (
+                      <span class="inline-flex text-[#9a9c95]"><Icon name="minus" size={18} /><span class="sr-only">{compare.notIncluded}</span></span>
+                    ) : (
+                      <span class="whitespace-nowrap">{v}</span>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

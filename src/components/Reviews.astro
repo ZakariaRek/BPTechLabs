@@ -1,0 +1,23 @@
+---
+// Rendered only when content.fr.ts has real reviews. Never invent any.
+import SectionHeading from './SectionHeading.astro';
+import { getContent } from '../i18n';
+const { reviews, reviewsSection, ui } = getContent(Astro.url);
+---
+{reviews.length > 0 && (
+  <section class="section" aria-labelledby="avis-titre">
+    <div class="container-page">
+      <SectionHeading id="avis-titre" eyebrow={reviewsSection.eyebrow} title={reviewsSection.title} />
+      <ul class="mt-12 grid gap-10 md:grid-cols-2 md:gap-12">
+        {reviews.map((r) => (
+          <li class="reveal rule pt-6">
+            <blockquote>
+              <p class="font-display text-2xl leading-snug md:text-3xl">{ui.quote(r.quote)}</p>
+            </blockquote>
+            <p class="mt-5 text-[0.9375rem] text-muted">{r.name}, {r.firm}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
