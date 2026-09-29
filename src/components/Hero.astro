@@ -21,37 +21,37 @@ const d = (ms: number) => `--d:${ms}ms`;
           <Fragment><span class="word"><span style={`--i:${i}`}>{w}</span></span>{i < words.length - 1 && ' '}</Fragment>
         ))}
       </h1>
-      <p class="load-rise mt-6 max-w-[34ch] text-lg leading-relaxed text-muted md:text-xl" style={d(293)}>
+      <p class="load-rise mt-6 max-w-[34ch] text-lg leading-relaxed text-muted md:text-xl" style={d(161)}>
         {hero.subtitle}
       </p>
-      <div class="load-rise mt-8" style={d(390)}>
+      <div class="load-rise mt-8" style={d(215)}>
         <WhatsAppButton placement="hero" size="lg" />
       </div>
-      <p class="load-rise tabular mt-4 text-[0.9375rem] text-muted" style={d(455)}>{hero.note}</p>
+      <p class="load-rise tabular mt-4 text-[0.9375rem] text-muted" style={d(250)}>{hero.note}</p>
     </div>
 
     <!-- Sample architect site, drawn in HTML/CSS (no image). It "builds" itself on load. -->
     <div class="order-1 mx-auto w-full max-w-2xl lg:order-2 lg:max-w-none" role="img" aria-label={m.label}>
-      <div class="load-rise" style={d(65)}>
+      <div class="load-rise" style={d(36)}>
           <BrowserFrame url={m.url}>
             <div class="bg-card p-4 sm:p-6" aria-hidden="true">
               <div class="flex items-center justify-between">
-                <span class="load-rise font-display text-lg leading-none sm:text-xl" style={d(228)}>{m.name}</span>
+                <span class="load-rise font-display text-lg leading-none sm:text-xl" style={d(125)}>{m.name}</span>
                 <span class="flex gap-3 text-[0.625rem] uppercase tracking-[0.14em] text-muted sm:gap-4 sm:text-[0.6875rem]">
-                  {m.links.map((l, i) => <span class="load-rise" style={d(260 + i * 46)}>{l}</span>)}
+                  {m.links.map((l, i) => <span class="load-rise" style={d(143 + i * 25)}>{l}</span>)}
                 </span>
               </div>
 
               <!-- Hero image: an abstract facade in CSS. -->
               <div class="facade relative mt-4 aspect-[16/7] overflow-hidden rounded-sm sm:mt-5">
-                <div class="load-grow-y absolute bottom-[14%] left-[8%] h-[62%] w-[34%] bg-[#d8d4c8]" style={d(358)}></div>
-                <div class="load-grow-y absolute bottom-[14%] left-[42%] h-[44%] w-[26%] bg-[#bfbaab]" style={d(455)}></div>
-                <div class="load-grow-y absolute bottom-[14%] left-[68%] h-[74%] w-[22%] bg-[#e6e3da]" style={d(553)}></div>
-                <div class="load-rise absolute bottom-[14%] left-[12%] h-[14%] w-[8%] bg-[#1d5750]/85" style={d(813)}></div>
-                <div class="load-rise absolute bottom-[40%] left-[72%] h-[10%] w-[14%] bg-[#1f211e]/70" style={d(878)}></div>
-                <div class="load-rise absolute bottom-[20%] left-[72%] h-[10%] w-[14%] bg-[#1f211e]/70" style={d(943)}></div>
-                <div class="load-grow-x absolute inset-x-0 bottom-0 h-[14%] bg-[#a9a495]" style={d(260)}></div>
-                <span class="load-rise absolute left-[5%] top-[12%] font-display text-[clamp(0.9rem,2.4vw,1.4rem)] text-ink/80" style={d(715)}>
+                <div class="load-grow-y absolute bottom-[14%] left-[8%] h-[62%] w-[34%] bg-[#d8d4c8]" style={d(197)}></div>
+                <div class="load-grow-y absolute bottom-[14%] left-[42%] h-[44%] w-[26%] bg-[#bfbaab]" style={d(250)}></div>
+                <div class="load-grow-y absolute bottom-[14%] left-[68%] h-[74%] w-[22%] bg-[#e6e3da]" style={d(304)}></div>
+                <div class="load-rise absolute bottom-[14%] left-[12%] h-[14%] w-[8%] bg-[#1d5750]/85" style={d(447)}></div>
+                <div class="load-rise absolute bottom-[40%] left-[72%] h-[10%] w-[14%] bg-[#1f211e]/70" style={d(483)}></div>
+                <div class="load-rise absolute bottom-[20%] left-[72%] h-[10%] w-[14%] bg-[#1f211e]/70" style={d(519)}></div>
+                <div class="load-grow-x absolute inset-x-0 bottom-0 h-[14%] bg-[#a9a495]" style={d(143)}></div>
+                <span class="load-rise absolute left-[5%] top-[12%] font-display text-[clamp(0.9rem,2.4vw,1.4rem)] text-ink/80" style={d(393)}>
                   {m.heading}
                 </span>
                 <!-- Slow light sweep across the facade. -->
@@ -60,7 +60,7 @@ const d = (ms: number) => `--d:${ms}ms`;
 
               <div class="mt-3 grid grid-cols-3 gap-2 sm:mt-4 sm:gap-3">
                 {m.projects.map((p, i) => (
-                  <div class="load-rise" style={d(650 + i * 78)}>
+                  <div class="load-rise" style={d(358 + i * 43)}>
                     <div class:list={['aspect-[4/3] rounded-sm', ['bg-[#dcd9cf]', 'bg-[#c9d6d1]', 'bg-[#e4dccc]'][i]]}>
                       <div class:list={[
                         'size-full',
